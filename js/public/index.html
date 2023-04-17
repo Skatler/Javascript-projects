@@ -41,32 +41,5 @@
     
 
 </body>
-<<<<<<< HEAD
-=======
-<script>
-  const form = document.querySelector('form'); // Получаем ссылку на форму
-  const output = document.querySelector('#output'); // Получаем ссылку на элемент вывода результата
-
-  form.addEventListener('submit', (event) => { // Отлавливаем событие отправки формы
-    event.preventDefault(); // Отменяем стандартное поведение формы
-    const formData = new FormData(form); // Создаем объект FormData из формы
-    fetch('/convert', { // Отправляем POST запрос на сервер для конвертации изображения
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.blob()) // Получаем blob-объект из ответа сервера
-      .then((blob) => { // Обрабатываем blob-объект
-        const url = URL.createObjectURL(blob); // Создаем URL-ссылку на blob-объект
-        const a = document.createElement('a'); // Создаем ссылку для скачивания конвертированного изображения
-        a.href = url; // Задаем ссылку для скачивания
-        a.download = 'image.webp'; // Задаем имя для скачиваемого файла
-        a.click(); // Выполняем клик по ссылке для скачивания
-      })
-      .catch((error) => { // Обрабатываем ошибки
-        console.error(error);
-      });
-  });
-</script>
->>>>>>> c0edc4fcbda0b309b1e4a72a7f56a150b597d09d
 
 </html>
