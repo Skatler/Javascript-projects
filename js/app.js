@@ -14,9 +14,10 @@ app.post('/convert', upload.single('image'), (req, res) => {
   }
 
   const image = req.file;
+  const quality = req.body.quality || 100;
 
   sharp(image.buffer)
-    .webp()
+    .webp({ quality: parseInt(quality) })
     .toBuffer()
     .then((outputBuffer) => {
       res.writeHead(200, {
@@ -30,6 +31,7 @@ app.post('/convert', upload.single('image'), (req, res) => {
       res.status(500).send('Error converting image');
     });
 });
+
 
 app.get('/', (_req, res) => {
   const indexPath = path.resolve(__dirname, 'public', 'index.html');

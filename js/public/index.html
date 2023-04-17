@@ -1,44 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Image Converter</title>
-  </head>
-  <body>
-    <h1>Image Converter</h1>
-    <form>
-      <input type="file" name="image" multiple>
-      <br>
-      <button type="submit">Convert to WebP</button>
-    </form>
-    <div id="output"></div>
 
-    <script>
-      const form = document.querySelector('form');
-      const output = document.querySelector('#output');
-    
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-        fetch('/convert', {
-          method: 'POST',
-          body: formData
+<head>
+  <title>Image Converter</title>
+</head>
+
+<body>
+  <h1>Image Converter</h1>
+  <form>
+    <input type="file" name="image" multiple>
+    <br>
+    <label for="quality">Качество:</label>
+    <input type="range" id="quality" name="quality" min="10" max="100" step="10" value="100">
+    <br>
+    <button type="submit">Convert to WebP</button>
+  </form>
+  <div id="output"></div>
+
+  <script>
+    const form = document.querySelector('form');
+    const output = document.querySelector('#output');
+    const qualityInput = document.querySelector('#quality');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      formData.append('quality', qualityInput.value);
+      fetch('/convert', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.blob())
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
         })
-          .then(response => response.blob())
-          .then((blob) => {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'image.webp';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    </script>
-    
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+
+
+  </script>
 
 </body>
 
