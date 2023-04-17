@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Image Converter</title>
+</head>
+
+<body>
+  <h1>Image Converter</h1>
+  <form action="/convert" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image">
+    <br>
+    <button type="submit">Convert to WebP</button>
+  </form>
+  <div id="output"></div>
+  <script src="/js/main.js"></script>
+</body>
+
+</html>
