@@ -1,19 +1,21 @@
 const express = require('express');
 const sharp = require('sharp');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
+const upload = multer();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/convert', (req, res) => {
-  if (!req.files || !req.files.image) {
+app.post('/convert', upload.single('image'), (req, res) => {
+  if (!req.file) {
     return res.status(400).send('No image uploaded');
   }
 
-  const image = req.files.image;
+  const image = req.file;
 
-  sharp(image.data)
+  sharp(image.buffer)
     .webp()
     .toBuffer()
     .then((outputBuffer) => {
@@ -37,5 +39,3 @@ app.get('/', (_req, res) => {
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });
-
-
