@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="ru">
 
 <head>
-  <title>Image Converter</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конвертер картинок</title>
 </head>
 
 <body>
-  <h1>Image Converter</h1>
+  <h1>Конвертер картинок</h1>
   <form>
     <input type="file" name="image" multiple>
     <br>
     <label for="quality">Качество:</label>
     <input type="range" id="quality" name="quality" min="10" max="100" step="10" value="100">
+    <span id="quality-value"></span>
     <br>
-    <button type="submit">Convert to WebP</button>
+    <button type="submit">Конвертировать в WebP</button>
   </form>
   <div id="output"></div>
 
@@ -21,6 +26,11 @@
     const form = document.querySelector('form');
     const output = document.querySelector('#output');
     const qualityInput = document.querySelector('#quality');
+    const qualityValue = document.querySelector('#quality-value');
+
+    qualityInput.addEventListener('input', () => {
+      qualityValue.textContent = qualityInput.value + '%';
+    });
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -44,5 +54,6 @@
   </script>
 
 </body>
+
 
 </html>
