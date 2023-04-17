@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Image Converter</title>
+  </head>
+  <body>
+    <h1>Image Converter</h1>
+    <form>
+      <input type="file" name="image" multiple>
+      <br>
+      <button type="submit">Convert to WebP</button>
+    </form>
+    <div id="output"></div>
 
-<head>
-  <title>Image Converter</title>
-</head>
-
-<body>
-  <h1>Image Converter</h1>
-  <form>
-    <input type="file" name="image"> <!-- Поле для загрузки изображения -->
-    <br>
-    <button type="submit">Convert to WebP</button> <!-- Кнопка отправки формы -->
-  </form>
-  <div id="output"></div> <!-- Элемент для вывода результата конвертации -->
+    <script>
+      const form = document.querySelector('form');
+      const output = document.querySelector('#output');
+    
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch('/convert', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.blob())
+          .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'image.webp';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+    </script>
+    
 
 </body>
-<script>
-  const form = document.querySelector('form'); // Получаем ссылку на форму
-  const output = document.querySelector('#output'); // Получаем ссылку на элемент вывода результата
-
-  form.addEventListener('submit', (event) => { // Отлавливаем событие отправки формы
-    event.preventDefault(); // Отменяем стандартное поведение формы
-    const formData = new FormData(form); // Создаем объект FormData из формы
-    fetch('/convert', { // Отправляем POST запрос на сервер для конвертации изображения
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.blob()) // Получаем blob-объект из ответа сервера
-      .then((blob) => { // Обрабатываем blob-объект
-        const url = URL.createObjectURL(blob); // Создаем URL-ссылку на blob-объект
-        const a = document.createElement('a'); // Создаем ссылку для скачивания конвертированного изображения
-        a.href = url; // Задаем ссылку для скачивания
-        a.download = 'image.webp'; // Задаем имя для скачиваемого файла
-        a.click(); // Выполняем клик по ссылке для скачивания
-      })
-      .catch((error) => { // Обрабатываем ошибки
-        console.error(error);
-      });
-  });
-
-
-</script>
 
 </html>
