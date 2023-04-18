@@ -11,17 +11,36 @@
 </head>
 
 <body>
-  <h1>Конвертер картинок</h1>
-  <form>
-    <input type="file" name="image" multiple>
-    <br>
-    <label for="quality">Качество:</label>
-    <input type="range" id="quality" name="quality" min="10" max="100" step="10" value="100">
-    <span id="quality-value"></span>
-    <br>
-    <button type="submit">Конвертировать в WebP</button>
-  </form>
-  <div id="output"></div>
+  <header class="header">
+    <div class="container">
+      <div class="header__inner">
+        <h1 class="header__title">Конвертер картинок</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <div class="main__inner">
+        <form class="main__form form" method="post" enctype="multipart/form-data">
+          <input class="form__input" type="file" name="image" multiple>
+          <br>
+          <label class="form__label" for="quality">Качество:</label>
+          <input class="form__range" type="range" id="quality" name="quality" min="10" max="100" step="10" value="100">
+          <span class="form__range-value" id="quality-value"></span>
+          <br>
+          <button class="form__submit" type="submit">Конвертировать в WebP</button>
+        </form>
+        <div class="main__output output"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+
+    </div>
+  </footer>
 
   <script src="./script.js"></script>
 </body>
